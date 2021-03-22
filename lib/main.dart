@@ -1,24 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:learn_api/pages/detail.dart';
 import 'package:learn_api/service/album.dart';
 
 import 'model/Album.dart';
 
 void main() {
-// void main(List<String> arguments) async {
-  // var url =
-  //     Uri.https('www.googleapis.com', '/books/v1/volumes', {'q': '{http}'});
-
-  // // Await the http get response, then decode the json-formatted response.
-  // var response = await http.get(url);
-  // if (response.statusCode == 200) {
-  //   var jsonResponse = convert.jsonDecode(response.body);
-  //   var itemCount = jsonResponse['totalItems'];
-  //   print('Number of books about http: $itemCount.');
-  // } else {
-  //   print('Request failed with status: ${response.statusCode}.');
-  // }
   runApp(MyApp());
 }
 
@@ -70,22 +58,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: Icon(
-                      Icons.favorite,
-                      color: Colors.pink,
-                      size: 24.0,
-                    ),
-                    title: Text(
-                      snapshot.data[index].title,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    subtitle: Text(
-                      snapshot.data[index].body,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  );
+                      leading: Icon(
+                        Icons.favorite,
+                        color: Colors.pink,
+                        size: 24.0,
+                      ),
+                      title: Text(
+                        snapshot.data[index].title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      subtitle: Text(
+                        snapshot.data[index].body,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                DetailPage(snapshot.data[index]),
+                          ),
+                        );
+                      });
                 },
               );
             } else if (snapshot.hasError) {
